@@ -26,4 +26,6 @@ print("Function name of %s in kernel is %s" % ("execve", syscall))
 b.attach_kprobe(event=syscall, fn_name="hello")
 
 # Print the contents of the kernel trace pipe.
+# This will run in an infinite loop. You can quit the program securely by ctrl+c.
+# The attached probes are automatically detached when Pythons Context Manager cleans up the resources.
 b.trace_print()
