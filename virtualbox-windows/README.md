@@ -18,4 +18,17 @@ cd ebpf
 ```
 git pull
 ```
-8. Congratulations, you are done! Minimize the window and switch back to your favorite editor, preferably Visual Studio Code.
+8. Open Visual Studio Code, install the `Remote Development` extension.
+9. Press `F1`, type `Remote-SSH: Connect to Host...`
+10. Type the ssh connection string
+```
+ssh ebpf-wokshop@localhost -p 2222
+```
+11. Go through the dialogue, type the password when prompted, confirm the fingerprint etc.
+12. Open the folder `ebpf` in the remote.
+13. Open a terminal, navigate to the `ebpf-python` folder
+14. Run
+```
+sudo python3 ebpf_hello_world.py
+```
+15. If you see Many `Hello World`'s -> Congratulations, you are all set!
