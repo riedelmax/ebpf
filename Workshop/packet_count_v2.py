@@ -15,7 +15,9 @@ bpf_program = """
 #include <linux/if_ether.h>
 #include <linux/ip.h>
 
-BPF_HASH(num_packets, u64); /* Why not use a HASH shared ds this time? */
+/* TODO: Define your shared data structure. What datastructure is appropriate?
+ * Hint: https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md#maps
+ */
 
 int count_packets(struct xdp_md *skb) {
 

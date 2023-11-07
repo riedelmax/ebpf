@@ -12,7 +12,9 @@ from bcc import BPF
 bpf_program = """
 #include <uapi/linux/bpf.h>
 
-/* TODO: Define your shared data structure. Hint: https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md#maps */
+/* TODO: Define your shared data structure. What datastructure is appropriate?
+ * Hint: https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md#maps
+ */
 
 int count_packets(struct __sk_buff *skb) {
     /* TODO: Access your shared data structure and increment the packet counter. How fit are you with pointers? (= */
