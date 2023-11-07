@@ -1,7 +1,7 @@
 from bcc import BPF
 
 # eBPF program code
-bpf_program = """
+bpf_program_hashmap = """
 #include <uapi/linux/bpf.h>
 
 BPF_HASH(num_packets, u64);
@@ -17,6 +17,21 @@ int count_packets(struct __sk_buff *skb) {
     return XDP_PASS;
 }
 """
+
+bpf_program_histogram = """
+#include <uapi/linux/bpf.h>
+
+BPF_HISTOGRAM(num_packets, u64);
+
+int count_packets(struct __sk_buff *skb) {
+    num_packets.increment(1);
+
+    return XDP_PASS;
+}
+"""
+
+bpf_program = bpf_program_hashmap
+# bpf_program = bpf_program_histogram
 
 # Load the BPF program
 b = BPF(text=bpf_program, cflags=["-w"])
