@@ -1,6 +1,8 @@
 '''
 We need to go deeper! Lets check source and destination ports for incoming TCP packets!
 This time, just print to the kernel trace pipe everytime you encounter a TCP packet.
+
+Hint: There won't be much output of the correct eBPF program. Can you find out why?
 '''
 
 from bcc import BPF

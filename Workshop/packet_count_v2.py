@@ -73,4 +73,4 @@ finally:
     
     
     # Hint: To satisfy the verifier you have to make sure that you don't access memory that is not belonging to your processs.
-    #       An if condition is sufficient.
+    #       Write a check to ensure that there is enough data in the packet to safely access and process the ethernet header.
