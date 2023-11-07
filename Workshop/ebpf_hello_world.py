@@ -8,15 +8,31 @@ from bcc import BPF
 # The defined C function prints a static string to the kernel trace pipe.
 # For more information see:
 # https://github.com/iovisor/bcc/blob/173282d39b98e3e7e6391d1159c5031bb4adb230/src/python/bcc/__init__.py#L1553
-program = r"""
+program1 = r"""
 int hello(void *ctx) {
     bpf_trace_printk("Hello, World. I am an eBPF Program.");
     return 0;
 }
 """
 
+program2 = r"""
+#include <uapi/linux/ptrace.h>
+int hello(struct pt_regs *ctx) {
+    // Access register values from the 'ctx' pointer
+    //unsigned long syscall_nr = ctx->di;
+    //unsigned long filename_ptr = ctx->si;
+    //unsigned long flags = ctx->dx;
+
+    // Print register values
+    bpf_trace_printk("Hello, World. I am an eBPF Program.");
+    bpf_trace_printk("%d", ctx->sp);
+
+    return 0;
+}
+"""
+
 # Create an instance of the BPF class using the eBPF Program defined above.
-b = BPF(text=program)
+b = BPF(text=program2)
 
 # Get the kernel function name of this syscall.
 syscall = b.get_syscall_fnname("execve")
