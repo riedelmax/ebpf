@@ -29,6 +29,6 @@ ssh ebpf-wokshop@localhost -p 2222
 13. Open a terminal, navigate to the `ebpf-python` folder
 14. Run
 ```
-sudo python3 ebpf_hello_world.py
+sudo python3 Workshop/ebpf_hello_world.py
 ```
 15. If you see Many `Hello World`'s -> Congratulations, you are all set!
