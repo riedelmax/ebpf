@@ -24,7 +24,7 @@ int count_packets(struct xdp_md *skb) {
 
     struct ethhdr *eth = data;
 
-    /* TODO: Something is missing here. Why is the verifier complaining? */
+    /* TODO: Something is missing here. Why is the verifier complaining? There is a hint at the end of this file. */
 
     if (eth->h_proto == htons(ETH_P_IP)) {
         /* TODO: Count IPV4 packets
@@ -56,3 +56,19 @@ except KeyboardInterrupt:
 finally:
     # Detach the eBPF program from the XDP hook when the program exits
     b.remove_xdp(dev=INTERFACE)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # Hint: To satisfy the verifier you have to make sure that you don't access memory that is not belonging to your processs.
+    #       An if condition is sufficient.
