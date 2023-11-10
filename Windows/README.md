@@ -22,7 +22,7 @@ git pull
 9. Press `F1`, type `Remote-SSH: Connect to Host...`
 10. Type the ssh connection string
 ```
-ssh ebpf-wokshop@localhost -p 2222
+ssh ebpf-workshop@localhost -p 2222
 ```
 11. Go through the dialogue, type the password when prompted, confirm the fingerprint etc.
 12. Open the folder `ebpf` in the remote.
@@ -32,3 +32,5 @@ ssh ebpf-wokshop@localhost -p 2222
 sudo python3 Workshop/ebpf_hello_world.py
 ```
 15. If you see Many `Hello World`'s -> Congratulations, you are all set!
+
+EDIT: Port 2222 sometimes also gets used by WSL. If you have WSL active, change the port forwarding rule in Oracle VM to an unused port, e.g. 2345
