@@ -27,15 +27,23 @@ int count_packets(struct xdp_md *skb) {
     if (eth->h_proto == htons(ETH_P_IP)) {
         struct iphdr *ip = (struct iphdr *)(eth + 1);
 
-        if (ip + sizeof(struct iphdr) > data_end) {
+        /* TODO: Again with the verifier complaining! But you know what to do, right? */
+        if (data + sizeof(struct ethhdr) + sizeof(struct iphdr) > data_end) {
             return XDP_PASS;
         }
 
+        /* TODO: How can you access the protocol? Hint: Check the definition of the iphdr struct. */
         if (ip->protocol == IPPROTO_TCP) {
-            struct tcphdr *tcp = (struct tcphdr *)(ip + 1);
+            struct tcphdr *tcph = (struct tcphdr *)(ip + 1);
 
-            bpf_trace_printk("TCP Packet: Source Port %d, Destination Port %d",
-                             bpf_ntohs(tcp->source), bpf_ntohs(tcp->dest));
+            if (data + sizeof(struct ethhdr) + sizeof(struct iphdr) + sizeof(struct tcphdr) > data_end) {
+                return XDP_PASS;
+            }
+
+            uint16_t src_port = ntohs(tcph->source);
+            uint16_t dest_port = ntohs(tcph->dest);
+
+            bpf_trace_printk("src_port=%u dest_port=%u", src_port, dest_port);
         }
     }
 
@@ -47,7 +55,7 @@ int count_packets(struct xdp_md *skb) {
 b = BPF(text=bpf_program, cflags=["-w"])
 
 # Attach the eBPF program to the XDP hook
-INTERFACE = "enp0s3"  # Replace with your network interface
+INTERFACE = "eth0"  # Replace with your network interface
 b.attach_xdp(dev=INTERFACE, fn=b.load_func("count_packets", BPF.XDP))
 
 # Keep the program running to maintain the XDP hook
